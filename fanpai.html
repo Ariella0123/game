@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>翻牌记忆游戏</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f0f0f0;
+    text-align:center;
+}
+
+h1{
+    margin-top:20px;
+}
+
+.game{
+    width:440px;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:repeat(4,100px);
+    grid-gap:10px;
+}
+
+.card{
+    width:100px;
+    height:100px;
+    background:#2c3e50;
+    color:white;
+    font-size:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    border-radius:8px;
+}
+
+.card.open{
+    background:white;
+    color:black;
+    cursor:default;
+}
+
+.card.matched{
+    background:#2ecc71;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>翻牌记忆游戏</h1>
+
+<div class="game" id="game"></div>
+
+<script>
+
+const symbols = [
+"🍎","🍎",
+"🍌","🍌",
+"🍇","🍇",
+"🍉","🍉",
+"🍒","🍒",
+"🥝","🥝",
+"🍍","🍍",
+"🍑","🍑"
+];
+
+symbols.sort(()=>Math.random()-0.5);
+
+const game = document.getElementById("game");
+
+let firstCard = null;
+let secondCard = null;
+let lock = false;
+
+symbols.forEach(symbol=>{
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.dataset.symbol = symbol;
+    card.innerHTML = "";
+    
+    card.addEventListener("click",flipCard);
+    
+    game.appendChild(card);
+});
+
+function flipCard(){
+
+    if(lock) return;
+
+    if(this.classList.contains("open")) return;
+
+    this.classList.add("open");
+    this.innerHTML = this.dataset.symbol;
+
+    if(!firstCard){
+        firstCard = this;
+        return;
+    }
+
+    secondCard = this;
+    lock = true;
+
+    checkMatch();
+}
+
+function checkMatch(){
+
+    if(firstCard.dataset.symbol === secondCard.dataset.symbol){
+
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        resetTurn();
+
+        checkWin();
+
+    }else{
+
+        setTimeout(()=>{
+
+            firstCard.classList.remove("open");
+            secondCard.classList.remove("open");
+
+            firstCard.innerHTML="";
+            secondCard.innerHTML="";
+
+            resetTurn();
+
+        },800)
+
+    }
+
+}
+
+function resetTurn(){
+    firstCard=null;
+    secondCard=null;
+    lock=false;
+}
+
+function checkWin(){
+
+    const matched = document.querySelectorAll(".matched");
+
+    if(matched.length === symbols.length){
+
+        setTimeout(()=>{
+            alert("恭喜！你赢了！");
+            location.reload();
+        },300)
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Snake Sanctuary</title>
+<style>
+    body {
+        background-color: #F5F8F2;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .card {
+        background: white;
+        width: 350px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        color: #6BAF92;
+    }
+
+    .snake {
+        font-size: 80px;
+        margin: 20px 0;
+    }
+
+    .bar-container {
+        margin: 10px 0;
+        text-align: left;
+    }
+
+    .bar-label {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .bar {
+        height: 20px;
+        border-radius: 10px;
+        background: #eee;
+        overflow: hidden;
+    }
+
+    .fill {
+        height: 100%;
+        background: #A8D5BA;
+        width: 100%;
+        transition: width 0.3s;
+    }
+
+    button {
+        margin: 10px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 15px;
+        background: #FFD6E0;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    button:hover {
+        background: #ffc0d2;
+    }
+
+    .message {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #666;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Snake Sanctuary</h1>
+
+    <!-- <div class="snake" id="snakeEmoji">🥚</div> -->
+
+    <img id="stageImage" width="150">
+
+    <div class="bar-container">
+        <div class="bar-label">Hunger</div>
+        <div class="bar">
+            <div id="hungerBar" class="fill"></div>
+        </div>
+    </div>
+
+    <div class="bar-container">
+        <div class="bar-label">Mood</div>
+        <div class="bar">
+            <div id="moodBar" class="fill"></div>
+        </div>
+    </div>
+
+    <button onclick="feedSnake()">Feed</button>
+    <button onclick="petSnake()">Pet</button>
+
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+
+    let snake = JSON.parse(localStorage.getItem("snakeData")) || {
+        hunger: 100,
+        mood: 100,
+        growth: 0,
+        stage: "Egg"
+    };
+
+    let eggImage = "images/egg.png";
+    let hatchlingImage = "images/hatchling.png";
+    let juvenileImage = "images/juvenile.png";
+    let adultImage = "images/adult.png";
+
+    function updateStageImage() {
+
+    let img = document.getElementById("stageImage");
+
+    if (snake.stage === "Egg") {
+        img.src = eggImage;
+    }
+
+    else if (snake.stage === "Hatchling") {
+        img.src = hatchlingImage;
+    }
+
+    else if (snake.stage === "Juvenile") {
+        img.src = juvenileImage;
+    }
+
+    else if (snake.stage === "Adult") {
+        img.src = adultImage;
+    }
+
+}
+
+//     function updateStageImage() {
+
+//     let img = document.getElementById("stageImage");
+
+//     if (snake.stage === "Egg") {
+//         img.src = eggImage;
+//     }
+
+//     else if (snake.stage === "Hatchling") {
+//         img.src = hatchlingImage;
+//     }
+
+//     else if (snake.stage === "Juvenile") {
+//         img.src = juvenileImage;
+//     }
+
+//     else if (snake.stage === "Adult") {
+//         img.src = adultImage;
+//     }
+
+// }
+
+    document.getElementById("stageImage").src="C:\Users\邱郁萱\Desktop\照片\原神\下载.png"
+    document.getElementById("stageImage").src="C:\Users\邱郁萱\Desktop\照片\原神\下载 (1).jpg"
+    document.getElementById("stageImage").src="C:\Users\邱郁萱\Desktop\照片\原神\下载.jpg"
+   
+    let img=document.querySelector('img');
+    img.src=stageImage;
+
+
+    // document.getElementById("snakeEmoji").innerText = emoji;
+
+    function updateUI() {
+
+    document.getElementById("hungerBar").style.width = snake.hunger + "%";
+    document.getElementById("moodBar").style.width = snake.mood + "%";
+
+    updateStageImage();
+
+    localStorage.setItem("snakeData", JSON.stringify(snake));
+}
+
+    function feedSnake() {
+        snake.hunger += 15;
+        snake.growth += 5;
+
+        if (snake.hunger > 100) snake.hunger = 100;
+
+        checkGrowth();
+        showMessage("Your snake is growing!");
+        updateUI();
+    }
+
+    function petSnake() {
+        snake.mood += 15;
+        if (snake.mood > 100) snake.mood = 100;
+        showMessage("Your snake feels happy and safe.");
+        updateUI();
+    }
+
+    function showMessage(text) {
+        document.getElementById("message").innerText = text;
+    }
+
+    function decreaseStats() {
+        snake.hunger -= 1;
+        snake.mood -= 1;
+
+        if (snake.hunger < 0) snake.hunger = 0;
+        if (snake.mood < 0) snake.mood = 0;
+
+        if (snake.hunger === 0) {
+            showMessage("Your snake is very hungry...");
+        }
+
+        if (snake.mood === 0) {
+            showMessage("Your snake feels lonely...");
+        }
+
+        updateUI();
+    }
+
+    setInterval(decreaseStats, 2000);
+
+    updateUI();
+
+//     function updateUI() {
+
+//     checkGrowth();
+//     // updateStageImage();
+
+// }
+
+</script>
+
+</body>
+</html>

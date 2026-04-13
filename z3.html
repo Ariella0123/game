@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .spin-text{
+            display:inline-block;
+            animation:rotateText 2s linear 1;
+            transform-style:preserve-3d;
+        }
+        @keyframes rotateText{
+            0%{transform:rotate(0deg);}
+            100%{transform:rotate(360deg);}
+        }
+    </style>
+    <div class="spin-text">
+        <h1>Welcome to my group.</h1>
+    </div>
+</body>
+</html>

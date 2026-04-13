@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的照片墙</title>
+</head>
+<style>
+    body{
+        background-color: rgba(236, 150, 89, 0.984);
+
+    }
+    .narbar{
+        margin: 20px;
+        color: white;
+        padding:14px 15px;
+        text-align: center;
+        background-color: rgb(180, 73, 3);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        border-radius: 10px;
+    }
+    .narbar #tema{
+        text-align: center;
+        padding: 20px;
+    }
+
+    
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 50px;
+        height: 300px;
+        padding: 20px;
+    }
+    /* 卡片容器 */
+    .card {
+        perspective: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        border: 2px solid black;
+        padding: 10px;
+        background-color: aliceblue;
+    }
+
+    /* 卡片内部 */
+    .card-inner {
+        position: relative;
+        width: 100%;
+        height: 260px;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    
+    }
+
+    /* 翻转状态 */
+    .card.flipped .card-inner {
+        transform: rotateY(180deg) scale(0.9);
+        
+        z-index: 2;
+    }
+
+    /* 正反面通用 */
+    .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 14px;
+        overflow: hidden;
+        backface-visibility: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* 正面 */
+    .card-front img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+
+    /* 背面 */
+    .card-back {
+        background: white;
+        transform: rotateY(180deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 16px;
+    }
+    .card-inner p{
+        position: absolute;
+        display: block;
+        z-index: 3;
+    }
+    @media (max-width:568px) {
+        .gallery{
+             grid-template-columns: repeat(1, minmax(220px, 1fr));
+
+        }
+    }
+</style>
+<body>
+
+    <div class="narbar">
+        <h1 id="tema">1A3📸照片墙</h1>
+    </div>
+
+    <section class="container">
+
+        <div class="gallery">
+
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="C:\Users\邱郁萱\Desktop\照片\原神\mmexport5b2ebbecbe75a9733af4613fb4621785_1731141501384.webp" alt="card 1" width="200px" height="250px">
+                    </div>
+                    <div class="card-back">
+                        asdfghjk
+                    </div>
+                   
+                </div>
+                <p class="card-text">how to display in bottom</p>
+                
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-inner">
+                    <div class="card-front">
+                        <img src="C:\Users\邱郁萱\Desktop\照片\原神\mmexport5b2ebbecbe75a9733af4613fb4621785_1731141501384.webp" alt="card 1" width="200px" height="300px" >
+                    </div>
+                    <div class="card-back">
+                        asdfghjk
+                    </div>
+               </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="C:\Users\邱郁萱\Desktop\照片\原神\mmexport5b2ebbecbe75a9733af4613fb4621785_1731141501384.webp" alt="card 1" width="200px" height="300px" >
+                    </div>
+                    <div class="card-back">
+                        asdfghjk
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    
+    </section>
+    <script>
+        function flipCard(card){
+            card.classList.toggle("flipped");
+        }
+    </script>
+</body>
+</html>

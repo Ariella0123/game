@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫咪</title>
+</head>
+<style>
+    body{
+        margin:0;
+        overflow:hidden;
+    }
+
+    #player1{
+        position:absolute;
+        left:0;
+        top:0;
+    }
+    #player2{
+        position:absolute;
+        right: 0px;
+        top:0;
+    }
+    .container1{
+        display: grid;
+        width: 300px;
+        height: 300px;
+        grid-template-columns: repeat(3, auto);
+        gap: 0px 0;
+        position: absolute;
+        bottom: 60px ;
+        left: 30px;
+        
+    }
+    .container2{
+        display: grid;
+        width: 300px;
+        height: 280px;
+        grid-template-columns: repeat(3, auto);
+        gap: 0px 0;
+        position: absolute;
+        bottom: 60px ;
+        right: 30px;
+        
+    }
+    .dua,.empat,.enam,.lapan{
+        border: 3px solid black;
+        border-radius: 100px;
+        box-shadow: 0 0 5px black;
+    }
+    .tupian:hover{
+        width: 200px;
+        transition: transform 0.2s;
+    }
+</style>
+<body>
+    <div id="player1">
+        <img src="miow1.png" alt="renwu1" width="100px" height="100px">
+    </div>
+    <div class="container1">
+        <div></div>
+        <div class="dua">
+            <img src="errow up.png" alt="up" width="100px" height="100px">
+        </div>
+        <div></div>
+        <div class="empat">
+            <img src="errow left.png" alt="left" width="100px" height="100px">
+        </div>
+        <div></div>
+        <div class="enam">
+            <img src="errow right.png" alt="right" width="100px" height="100px">
+        </div>
+        <div></div>
+        <div class="lapan">
+            <img src="errow down.png" alt="up" width="100px" height="100px">
+        </div>
+        <div></div>
+    </div>
+    <div id="player2">
+        <img src="heimao.png" alt="renwu2" width="100px" height="100px">
+    </div>
+    <div class="container2">
+        <div></div>
+        <div class="dua">
+            <img src="errow up.png" alt="up" width="100px" height="100px">
+        </div>
+        <div></div>
+        <div class="empat">
+            <img src="errow left.png" alt="left" width="100px" height="100px">
+        </div>
+        <div></div>
+        <div class="enam">
+            <img src="errow right.png" alt="right" width="100px" height="100px">
+        </div>
+        <div></div>
+        <div class="lapan">
+            <img src="errow down.png" alt="up" width="100px" height="100px">
+        </div>
+        <div></div>
+    </div>
+</body>
+
+<script>
+    // --- 玩家 1 设置 (WASD) ---
+    let player1 = document.getElementById("player1");
+    let p1x = 0;
+    let p1y = 0;
+
+    // --- 玩家 2 设置 (Arrows) ---
+    let player2 = document.getElementById("player2");
+    // 初始化玩家2的位置，因为它在右边，我们根据窗口宽度设个初始值
+    let p2x = window.innerWidth - 100; 
+    let p2y = 0;
+    player2.style.left = p2x + "px";
+
+    let speed = 15;
+
+    // 键盘按下事件
+    document.addEventListener("keydown", function(event) {
+        const img1 = document.querySelectorAll(".container1 div");
+        const img2 = document.querySelectorAll(".container2 div");
+        const key = event.key;
+
+        // --- 玩家 1 逻辑 ---
+        if (key === "w") {
+            p1y -= speed;
+            img1[1].style.transform = "scale(1.2)";
+        } else if (key === "a") {
+            p1x -= speed;
+            img1[3].style.transform = "scale(1.2)";
+        } else if (key === "d") {
+            p1x += speed;
+            img1[5].style.transform = "scale(1.2)";
+        } else if (key === "s") {
+            p1y += speed;
+            img1[7].style.transform = "scale(1.2)";
+        }
+
+        // --- 玩家 2 逻辑 ---
+        if (key === "ArrowUp") {
+            p2y -= speed;
+            img2[1].style.transform = "scale(1.2)";
+        } else if (key === "ArrowLeft") {
+            p2x -= speed;
+            img2[3].style.transform = "scale(1.2)";
+        } else if (key === "ArrowRight") {
+            p2x += speed;
+            img2[5].style.transform = "scale(1.2)";
+        } else if (key === "ArrowDown") {
+            p2y += speed;
+            img2[7].style.transform = "scale(1.2)";
+        }
+
+        // 更新位置
+        player1.style.left = p1x + "px";
+        player1.style.top = p1y + "px";
+        
+        player2.style.left = p2x + "px";
+        player2.style.top = p2y + "px";
+    });
+
+    // 键盘松开事件 (恢复缩放)
+    document.addEventListener("keyup", function(event) {
+        const img1 = document.querySelectorAll(".container1 div");
+        const img2 = document.querySelectorAll(".container2 div");
+        const key = event.key;
+
+        // 玩家 1 恢复
+        if (key === "w") img1[1].style.transform = "scale(1)";
+        if (key === "a") img1[3].style.transform = "scale(1)";
+        if (key === "d") img1[5].style.transform = "scale(1)";
+        if (key === "s") img1[7].style.transform = "scale(1)";
+
+        // 玩家 2 恢复
+        if (key === "ArrowUp") img2[1].style.transform = "scale(1)";
+        if (key === "ArrowLeft") img2[3].style.transform = "scale(1)";
+        if (key === "ArrowRight") img2[5].style.transform = "scale(1)";
+        if (key === "ArrowDown") img2[7].style.transform = "scale(1)";
+    });
+</script>
+
+<!-- <script 方案2 （space键切换）>
+    // --- 玩家设置 ---
+    let player1 = document.getElementById("player1");
+    let player2 = document.getElementById("player2");
+    
+    let p1x = 0; let p1y = 0;
+    let p2x = window.innerWidth - 100; let p2y = 0;
+    player2.style.left = p2x + "px";
+
+    let speed = 15;
+
+    // --- 切换逻辑变量 ---
+    // 1 代表正在控制 Player1, 2 代表正在控制 Player2
+    let activePlayer = 1; 
+
+    document.addEventListener("keydown", function(event) {
+        const img1 = document.querySelectorAll(".container1 div");
+        const img2 = document.querySelectorAll(".container2 div");
+        const key = event.key;
+
+        // --- 空格键：切换控制对象 ---
+        if (key === " ") { // " " 代表空格键
+            activePlayer = (activePlayer === 1) ? 2 : 1;
+            console.log("现在控制的是玩家: " + activePlayer);
+            
+            // 可选：添加一点视觉反馈，让用户知道换人了
+            player1.style.opacity = (activePlayer === 1) ? "1" : "0.5";
+            player2.style.opacity = (activePlayer === 2) ? "1" : "0.5";
+            return; // 切换完直接结束本次事件
+        }
+
+        // --- 根据当前活跃玩家来控制移动 ---
+        if (activePlayer === 1) {
+            // 只有当前是 Player1 时，WASD 才起作用
+            if (key === "w") { p1y -= speed; img1[1].style.transform = "scale(1.2)"; }
+            else if (key === "a") { p1x -= speed; img1[3].style.transform = "scale(1.2)"; }
+            else if (key === "d") { p1x += speed; img1[5].style.transform = "scale(1.2)"; }
+            else if (key === "s") { p1y += speed; img1[7].style.transform = "scale(1.2)"; }
+        } else {
+            // 只有当前是 Player2 时，ArrowKeys 才起作用
+            if (key === "ArrowUp") { p2y -= speed; img2[1].style.transform = "scale(1.2)"; }
+            else if (key === "ArrowLeft") { p2x -= speed; img2[3].style.transform = "scale(1.2)"; }
+            else if (key === "ArrowRight") { p2x += speed; img2[5].style.transform = "scale(1.2)"; }
+            else if (key === "ArrowDown") { p2y += speed; img2[7].style.transform = "scale(1.2)"; }
+        }
+
+        // 更新位置
+        player1.style.left = p1x + "px";
+        player1.style.top = p1y + "px";
+        player2.style.left = p2x + "px";
+        player2.style.top = p2y + "px";
+    });
+
+    // 键盘松开事件（保持不变，用于恢复缩放）
+    document.addEventListener("keyup", function(event) {
+        const img1 = document.querySelectorAll(".container1 div");
+        const img2 = document.querySelectorAll(".container2 div");
+        const key = event.key;
+        if (key === "w") img1[1].style.transform = "scale(1)";
+        if (key === "a") img1[3].style.transform = "scale(1)";
+        if (key === "d") img1[5].style.transform = "scale(1)";
+        if (key === "s") img1[7].style.transform = "scale(1)";
+        if (key === "ArrowUp") img2[1].style.transform = "scale(1)";
+        if (key === "ArrowLeft") img2[3].style.transform = "scale(1)";
+        if (key === "ArrowRight") img2[5].style.transform = "scale(1)";
+        if (key === "ArrowDown") img2[7].style.transform = "scale(1)";
+    });
+</script> -->
+</html>
